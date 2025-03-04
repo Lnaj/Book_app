@@ -1,0 +1,85 @@
+@Metadata.layer: #CORE
+@Search.searchable: true
+@UI.headerInfo: {
+  typeName: 'Stock',
+  typeNamePlural: 'Stocks',
+  title: { value: 'BookId', label: 'Book ID' }
+}
+annotate view zc_proj_stock_g2 with
+{
+
+
+// Action Buttons
+  @UI.lineItem: [
+    { type: #FOR_ACTION, dataAction: 'CorrectStock', label: 'Correct the Stock' },
+    { type: #FOR_ACTION, dataAction: 'CreateOrder', label: 'Create an Order' },
+    { type: #FOR_ACTION, dataAction: 'ManageDeliveredBooks', label: 'Manage Delivered Books' }
+  ]
+
+
+  // Facets
+  @UI.facet: [
+    { id: 'HeaderFacet',
+      purpose: #HEADER,
+      label: 'Book ID',
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'HeaderInfo',
+      position: 10 },
+      
+    { id: 'StockInfo',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Stock Info',
+      targetQualifier: 'StockInfo',
+      position: 20 },
+      
+    { id: 'TechnicalInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Administrative Info',
+      targetQualifier: 'TechnicalInfo',
+      position: 30 }
+  ]
+
+  // Header info
+  
+  @UI.lineItem: [ { position: 10,  importance: #HIGH } ]
+//  @UI:{ lineItem: [{ position: 10, label: 'Book ID', importance: #HIGH  }] }
+  @UI.fieldGroup: [{ position: 10, qualifier: 'HeaderInfo', label: 'Book ID' }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  BookId;
+
+@UI:{ lineItem: [{ position: 5, label: 'Title', importance: #HIGH  }] }
+    @UI.identification: [{ position: 5, qualifier: 'PersonalInfo', label: 'Title' }]
+    @UI.fieldGroup: [{ position: 5, qualifier: 'PersonalInfo' }]
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.7
+    Title;
+
+    @UI:{ lineItem: [{ position: 5, label: 'Full Name', importance: #HIGH  }] }
+    @UI.identification: [{ position: 5, qualifier: 'PersonalInfo', label: 'Full Name' }]
+    @UI.fieldGroup: [{ position: 5, qualifier: 'PersonalInfo' }]
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.7
+    FullName;
+
+  // Stock info
+  @UI:{ lineItem: [{ position: 20, label: 'Current Stock', importance: #HIGH  }] }
+  @UI.identification: [{ position: 20, qualifier: 'StockInfo', label: 'Current Stock' }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'StockInfo' }]
+  CurrentStock;
+
+  @UI:{ lineItem: [{ position: 30, label: 'Backorder', importance: #MEDIUM  }] }
+  @UI.identification: [{ position: 30, qualifier: 'StockInfo', label: 'Backorder' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'StockInfo' }]
+  Backorder;
+
+ 
+
+//  // Associations
+//  @UI.fieldGroup: [{ position: 50, label: 'Order Item' }]
+//  _order_item;
+
+
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'service def'
+define service Zsd_aut {
+  expose zc_proj_author   as author;
+  expose zc_proj_book     as book;
+  expose zc_proj_stock_g2 as Stock;
+}

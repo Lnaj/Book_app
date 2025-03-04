@@ -1,0 +1,137 @@
+@Metadata.layer: #CUSTOMER
+@Search.searchable: true
+@UI.headerInfo: {
+typeName: 'Book',
+typeNamePlural: 'Books',
+title: { value: 'Title', label: 'Book Title' }
+
+}
+annotate entity zc_proj_book with
+{
+
+
+  // Facets
+
+  @UI.facet: [
+    { id: 'HeaderFacet', purpose: #HEADER, label: 'Identification Info',
+      type: #FIELDGROUP_REFERENCE, targetQualifier: 'HeaderInfo', position: 10 },
+
+      { id: 'ContentInfo', purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,
+      label: 'Content information', targetQualifier: 'ContentInfo', position: 20 },
+
+      { id: 'PublicationInfo', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE,
+      label: 'Publication Information', targetQualifier: 'PublicationInfo', position: 30 },
+
+      { id: 'PriceInfo', purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,
+      label: 'Pricing', targetQualifier: 'PriceInfo', position: 40 },
+
+      { id: 'TechnicalInfo', purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,
+      label: 'Technical Info', targetQualifier: 'TechnicalInfo', position: 50 }
+  ]
+
+  // Header Info
+ @UI.lineItem: [{ position: 10, label: 'Title', importance: #HIGH }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.identification: [{ position: 10, qualifier: 'HeaderInfo', label: 'Title' },
+  { position: 10, qualifier: 'ContentInfo', label: 'Title' }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'ContentInfo', label: 'Title' }]
+  @EndUserText.label: 'Title'
+  @Search.defaultSearchElement: true
+  Title;
+
+  @UI.lineItem: [{ position: 10, label: 'Book ID', importance: #HIGH }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'HeaderInfo', label: 'Book ID' }]
+  BookId;
+
+
+  @UI.identification: [{ position: 30, qualifier: 'HeaderInfo', label: 'Author ID' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'HeaderInfo', label: 'Author ID' }]
+  AuthorId;
+
+  @UI.identification: [{ position: 40, qualifier: 'HeaderInfo', label: 'ISBN' }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'HeaderInfo', label: 'ISBN' }]
+  Isbn;
+
+  // Publication Info
+
+  @UI.selectionField: [{ position: 20 }]
+  @UI.identification: [{ position: 10, qualifier: 'PublicationInfo', label: 'Publisher' }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'PublicationInfo', label: 'Publisher' }]
+  Publisher;
+
+
+
+  @UI.identification: [{ position: 20, qualifier: 'PublicationInfo', label: 'Edition' }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'PublicationInfo' }]
+  Edition;
+
+
+
+  @UI.lineItem: [{ position: 30, label: 'Release Date', importance: #HIGH }]
+  @UI.identification: [{ position: 30, qualifier: 'PublicationInfo', label: 'Release Date' }]
+  @UI.fieldGroup: [{ position: 60, qualifier: 'PublicationInfo', label: 'Release Date' }]
+  ReleaseDate;
+
+
+  // Content Info
+
+  
+
+
+  @UI.lineItem: [{ position: 20, label: 'Genre', importance: #HIGH }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.identification: [{ position: 10, qualifier: 'ContentInfo', label: 'Genre' }]
+  @UI.fieldGroup: [{ position: 70, qualifier: 'ContentInfo', label: 'Genre' }]
+  @Consumption.valueHelpDefinition: [ { entity: { name: 'ZVH_GENRE_G2' , element: 'Genre' } } ]
+  Genre;
+
+
+  @UI.identification: [{ position: 30, qualifier: 'ContentInfo', label: 'Language' }]
+  @UI.fieldGroup: [{ position: 80, qualifier: 'ContentInfo', label: 'Language' }]
+  Language;
+
+  @UI.identification: [{ position: 40, qualifier: 'ContentInfo', label: 'Number of pages' }]
+  @UI.fieldGroup: [{ position: 90, qualifier: 'ContentInfo', label: 'Number of pages' }]
+  Pagess;
+
+  @UI.lineItem: [{ position: 40, label: 'Covertype', importance: #HIGH }]
+  @UI.identification: [{ position: 50, qualifier: 'ContentInfo', label: 'Cover type' }]
+  @UI.fieldGroup: [{ position: 100, qualifier: 'ContentInfo', label: 'Cover type' }]
+  @Consumption.valueHelpDefinition: [{ entity: { name:'ZVH_COVERTYPE_G2', element:'Covertype' } }]
+  CoverType;
+
+
+  @UI.multiLineText: true
+  @UI.identification: [{ position: 60, qualifier: 'ContentInfo', label: 'Synopsis' }]
+  @UI.fieldGroup: [{ position: 110, qualifier: 'ContentInfo', label: 'Synopsis' }]
+  Synopsis;
+
+  @UI.identification: [{ position: 70, qualifier: 'ContentInfo', label: 'Keywords' }]
+  @UI.fieldGroup: [{ position: 120, qualifier: 'ContentInfo', label: 'Keywords' }]
+  Keywords;
+
+
+  //     Pricing info
+
+  @UI.identification: [{ position: 10, qualifier: 'PriceInfo', label: 'Price' }]
+  @UI.fieldGroup: [{ position: 130, qualifier: 'PriceInfo', label: 'Price' }]
+  Price;
+  
+  @UI.identification: [{ position: 20, qualifier: 'PriceInfo', label: 'Price' }]
+  @UI.fieldGroup: [{ position: 140, qualifier: 'PriceInfo', label: 'Currency' }]
+  @Consumption.valueHelpDefinition: [{  entity: {  name: 'zc_ordercurrency_vh', element: 'Currency' } }]
+  Currency;
+
+  //   Technical info
+
+
+  @UI.fieldGroup: [{ position: 150, qualifier: 'TechnicalInfo', label: 'Created by' }]
+  Created_by;
+  @UI.fieldGroup: [{ position: 160, qualifier: 'TechnicalInfo', label: 'Created at' }]
+  Created_at;
+  @UI.fieldGroup: [{ position: 170, qualifier: 'TechnicalInfo', label: 'Changed by' }]
+  Changed_by;
+  @UI.fieldGroup: [{ position: 180, qualifier: 'TechnicalInfo', label: 'Changed at' }]
+  Changed_at;
+
+}

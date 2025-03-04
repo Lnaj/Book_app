@@ -1,0 +1,122 @@
+managed implementation in class ZCL_BP_I_COMPO_AUTHOR unique;
+strict ( 2 );
+
+define behavior for zi_compo_author alias author
+persistent table zauthor09
+lock master
+authorization master ( none )
+etag master Changed_At
+{
+  mapping for zauthor09
+    {
+      AuthorId    = author_id;
+      FirstName   = first_name;
+      LastName    = last_name;
+
+      DateOfBirth = date_of_birth;
+      nationality = nationality;
+      email       = email;
+      phone       = phone;
+      address     = address;
+      biography   = biography;
+      Created_At  = local_created_at;
+      Created_By  = local_created_by;
+      Changed_At  = local_last_changed_at;
+      Changed_By  = local_last_changed_by;
+    }
+
+
+  create;
+  update;
+  delete ( precheck );
+  field ( readonly, numbering : managed ) AuthorId;
+  field ( readonly ) Created_at, Created_by, Changed_at, Changed_by;
+  //** optional determination to determine the author ID
+  //**determination CreateKeys on modify { create; }
+  association _book { create; }
+  association _stock;
+  field ( mandatory ) FirstName, LastName, DateOfBirth;
+  validation ValidateBirthdate on save { create; update; }
+
+  //  /* 📌 Add Stock Management Actions */
+  //  action ( features: instance ) CorrectStock result [1] $self;
+  //  action ( features: instance ) CreateOrder result [1] $self;
+  //  action ( features: instance ) ManageDeliveredBooks result [1] $self;
+
+
+}
+
+define behavior for ZI_Compo_book alias book
+persistent table zbook09
+lock dependent by _auth
+authorization dependent by _auth
+etag master Changed_At
+{
+
+  mapping for zbook09
+    {
+      AuthorId    = author_id;
+      BookId      = book_id;
+      isbn        = isbn;
+      CoverType   = cover_type;
+      Edition     = edition;
+      Genre       = genre;
+      Created_at  = local_created_at;
+      Created_by  = local_created_by;
+      Changed_at  = local_last_changed_at;
+      Changed_by  = local_last_changed_by;
+      Keywords    = keywords;
+      Language    = language;
+      Pagess      = pagess;
+      Publisher   = publisher;
+      ReleaseDate = release_date;
+      ReleaseYear = release_year;
+      Synopsis    = synopsis;
+      Title       = title;
+      Price       = price;
+      Currency    = currency;
+    }
+  update;
+  delete;
+  field ( readonly ) Created_at, Created_by, Changed_at, Changed_by;
+  field ( readonly, numbering : managed ) BookId;
+  field ( readonly ) AuthorId;
+  field ( mandatory ) Title, Isbn, CoverType;
+
+  association _auth;
+}
+
+define behavior for zi_compo_stock_g2 alias stock
+persistent table zbook09
+lock dependent by _auth
+authorization dependent by _auth
+etag master Changed_At
+{
+
+  mapping for zbook09
+    {
+AuthorId    = author_id;
+      BookId       = book_id;
+      CurrentStock = current_stock;
+      Backorder    = backorder;
+      Created_at   = local_created_at;
+      Created_by   = local_created_by;
+      Changed_at   = local_last_changed_at;
+      Changed_by   = local_last_changed_by;
+
+    }
+
+  field ( readonly ) Created_at, Created_by, Changed_at, Changed_by;
+  field ( readonly, numbering : managed ) BookId;
+  field ( readonly ) AuthorId;
+
+  update;
+  delete;
+  association _auth;
+
+  /* Define Actions */
+  action   CorrectStock parameter zi_stock_g2 ;
+  action   CreateOrder parameter zi_stock_g2_2 ;
+  action ( features: instance ) ManageDeliveredBooks parameter zi_stock_g2_3 ;
+
+}

@@ -1,0 +1,135 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+typeName: 'Author',
+typeNamePlural: 'Authors',
+title: { value: 'FirstName', label: 'Author Name' }
+}
+@Search.searchable: true
+annotate view zc_proj_author with
+{
+
+//  Facets
+
+  @UI.facet: [
+    { id: 'HeaderFacet',
+      purpose: #HEADER,
+      label: 'Author ID',
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'HeaderInfo',
+      position: 10 },
+      
+    { id: 'PersonalInfo',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Personal Info',
+      targetQualifier: 'PersonalInfo',
+      position: 20 },
+      
+    { id: 'ContactInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Contact Info',
+      targetQualifier: 'ContactInfo',
+      position: 30 },
+      
+       { id: 'Biography',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Biography',
+      targetQualifier: 'Biography',
+      position: 40 },
+      
+      { id: 'TechnicalInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Technical Info',
+      targetQualifier: 'TechnicalInfo',
+      position: 50 },
+      
+    { id: 'Books', purpose: #STANDARD, position: 50, label: 'Book',
+                  type: #LINEITEM_REFERENCE, targetElement: '_book' }
+
+
+      
+  ]
+
+
+
+//  Header info
+
+  @UI.fieldGroup: [{ position: 10, qualifier: 'HeaderInfo', label: 'ID' }]
+  AuthorId;
+
+//  Personal info
+
+  @UI:{ lineItem: [{ position: 10, label: 'First Name', importance: #HIGH  }] }
+  @UI.identification: [{ position: 20, qualifier: 'PersonalInfo' , label: 'First Name'}]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'PersonalInfo' }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  FirstName;
+
+
+  @UI:{ lineItem: [{ position: 20, label: 'Last Name', importance: #HIGH  }] }
+  @UI.identification: [{ position: 30, qualifier: 'PersonalInfo' , label: 'Last Name' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'PersonalInfo' }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  LastName;
+
+  @UI.identification: [{ position: 40, qualifier: 'PersonalInfo' , label: 'Date of birth' }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'PersonalInfo' }]
+  DateOfBirth;
+
+
+  @UI.selectionField: [{ position: 10 }]
+  @UI.identification: [{ position: 50, qualifier: 'PersonalInfo' }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'PersonalInfo' }]
+  @EndUserText.label: 'Nationality'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZVH_NATIONALITIES_G2', element: 'Nationality' } }]                                            
+  Nationality;
+
+
+//  Contact info
+
+  @UI:{ lineItem: [{ position: 40, label: 'Email', importance: #MEDIUM  }] }
+  @UI.identification: [{ position: 30, qualifier: 'ContactInfo' , label: 'Email' }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'ContactInfo',label: 'Email' }]
+  Email;
+
+  @UI:{ lineItem: [{ position: 30, label: 'Phone Number', importance: #MEDIUM  }] }
+  @UI.identification: [{ position: 30, qualifier: 'ContactInfo' , label: 'Phone' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'ContactInfo', label: 'Phone' }]
+  Phone;
+
+  @UI.fieldGroup: [{ position: 30, qualifier: 'ContactInfo', label: 'Address' }]
+  Address;
+
+
+//  Biography
+
+  @UI.multiLineText: true
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Biography' }]
+  Biography;
+
+
+//  Technical Info
+
+@UI.hidden: true
+  @UI.fieldGroup: [{ position: 10, qualifier: 'TechnicalInfo', label: 'Created by' }]
+  Created_by;
+
+@UI.hidden: true
+  @UI.fieldGroup: [{ position: 20, qualifier: 'TechnicalInfo', label: 'Created at' }]
+  Created_at;
+  
+@UI.hidden: true
+  @UI.fieldGroup: [{ position: 30, qualifier: 'TechnicalInfo', label: 'Last changed by' }]
+  Changed_by;
+  
+@UI.hidden: true
+  @UI.fieldGroup: [{ position: 40, qualifier: 'TechnicalInfo', label: 'Last changed at' }]
+  Changed_at;
+
+
+}

@@ -1,0 +1,5 @@
+CLASS zcl_bp_i_compo_author DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_compo_author.
+ENDCLASS.
+
+CLASS zcl_bp_i_compo_author IMPLEMENTATION.
+ENDCLASS.
